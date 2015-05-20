@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <style>canvas {
+        width: 100%;
+        height: 100%
+    }</style>
+</head>
+<body>
+<div id="div_camera_coords"/>
+
+
+<script src="/js/vendor/threejs/three.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script>
+// http://threejs.org/docs/
+
+var camera, scene, renderer;
+var geometry, material, mesh;
+var cube, litCube;
+
+var down = false;
+var sx = 0, sy = 0;
+var rot = Math.PI / 3;
+
+init();
+animate(new Date().getTime());
+
+
+// events
+window.onmousedown = function (ev) {
+    down = true;
+    sx = ev.clientX;
+    sy = ev.clientY;
+};
+window.onmouseup = function () {
+    down = false;
+};
+window.onmousemove = function (ev) {
+    if (down) {
+        var dx = ev.clientX - sx;
+        var dy = ev.clientY - sy;
+        rot += dx * 0.01;
+        camera.position.x = Math.cos(rot) * 170;
+        camera.position.z = Math.sin(rot) * 170;
+        camera.position.y = Math.max(5, camera.position.y + dy);
+        sx += dx;
+        sy += dy;
+        set_camera_coords();
+    }
+}
+
+function set_camera_coords() {
+    $("#div_camera_coords").html("<span style='margin:10px; color:#80602d'>x=>" + camera.position.x +
+            ", y=>" + camera.position.y +
+            ", z=>" + camera.position.z + "</span>");
+}
+
+// http://http://gdd11-webgl.appspot.com/
+function init() {
+    // new THREE.PerspectiveCamera(FOV, viewAspectRatio, zNear, zFar);
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    //camera.position.x = 170;
+    //camera.position.y = 170;
+    camera.position.z = 150;
+
+    scene = new THREE.Scene();
+
+    // spotlight
+    /*var light = new THREE.SpotLight();
+     light.position.set( 170, 330, -160 );
+     // enable shadows for a light
+     light.castShadow = true;
+     scene.add(light);*/
+
+    // directional lighting
+    var directionalLight = new THREE.DirectionalLight(0xEEEEEE);
+    directionalLight.position.set(1, 1, 1).normalize();
+    // enable shadows for a light
+    directionalLight.castShadow = true;
+    scene.add(directionalLight);
+
+    // ambient lighting
+    var ambientLight = new THREE.AmbientLight(0x333333);
+    scene.add(ambientLight);
+
+    // material
+    var material = new THREE.MeshLambertMaterial({
+        map: THREE.ImageUtils.loadTexture('http://www.html5canvastutorials.com/demos/assets/crate.jpg')
+    });
+
+
+    cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 50),
+            new THREE.MeshLambertMaterial({color: 0xAAAAAA, wireframe: false}));
+    //cube = new THREE.Mesh(new THREE.CubeGeometry(50,50,50),material);
+    cube.rotation.y = 45;
+    // enable shadows for an object
+    cube.castShadow = true;
+    cube.receiveShadow = true;
+    cube.overdraw = true;
+    //cube.rotation.x = Math.PI * 0.1;
+    scene.add(cube);
+
+
+    litCube = new THREE.Mesh(
+            new THREE.CubeGeometry(50, 50, 50),
+            new THREE.MeshLambertMaterial({color: 0xFFFFFF, wireframe: false}));
+    litCube.overdraw = true;
+    litCube.position.y = 50;
+    // enable shadows for an object
+    litCube.castShadow = true;
+    litCube.receiveShadow = true;
+    scene.add(litCube);
+
+    var planeGeo = new THREE.PlaneGeometry(400, 200, 10, 10);
+    var planeMat = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
+    var plane = new THREE.Mesh(planeGeo, planeMat);
+    plane.rotation.x = -Math.PI / 2;
+    plane.position.y = -25;
+    plane.receiveShadow = true;
+    scene.add(plane);
+
+    // renderer
+    renderer = new THREE.WebGLRenderer({antialias: true});
+    // enable shadows on the renderer
+    renderer.shadowMapEnabled = true;
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    document.body.appendChild(renderer.domElement);
+
+    renderer.setClearColor(0xEEEEEE, 1.0);
+    //renderer.clear();
+
+    set_camera_coords();
+
+}
+
+function animate(t) {
+    litCube.position.x = Math.cos(t / 600) * 85;
+    litCube.position.y = 60 - Math.sin(t / 900) * 25;
+    litCube.position.z = Math.sin(t / 600) * 85;
+    litCube.rotation.x = t / 500;
+    litCube.rotation.y = t / 800;
+    // spin the camera in a circle
+    //camera.position.x = Math.sin(t/1000)*300;
+    camera.position.y = 150;
+    //camera.position.z = Math.cos(t/1000)*300;
+    // you need to update lookAt on every frame
+    camera.lookAt(scene.position);
+    // renderer automatically clears unless autoClear = false
+    renderer.render(scene, camera);
+    window.requestAnimationFrame(animate, renderer.domElement);
+}
+
+function init_orig() {
+
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.z = 1000;
+
+    scene = new THREE.Scene();
+
+    geometry = new THREE.CubeGeometry(200, 200, 200);
+    material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
+
+    mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    renderer = new THREE.CanvasRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    document.body.appendChild(renderer.domElement);
+
+}
+
+function animate_orig() {
+
+    // note: three.js includes requestAnimationFrame shim
+    requestAnimationFrame(animate);
+
+    mesh.rotation.x += 0.01;
+    mesh.rotation.y += 0.02;
+
+    renderer.render(scene, camera);
+
+}
+
+
+/*
+ function createTextCanvas(text, color, font, size) {
+ size = size || 24;
+ var canvas = document.createElement('canvas');
+ var ctx = canvas.getContext('2d');
+ var fontStr = (size + 'px ') + (font || 'Arial');
+ ctx.font = fontStr;
+ var w = ctx.measureText(text).width;
+ var h = Math.ceil(size*1.25);
+ canvas.width = w;
+ canvas.height = h;
+ ctx.font = fontStr;
+ ctx.fillStyle = color || 'black';
+ ctx.fillText(text, 0, size);
+ return canvas;
+ }
+
+ function createText2D(text, color, font, size, segW, segH) {
+ var canvas = createTextCanvas(text, color, font, size);
+ var plane = new THREE.PlaneGeometry(canvas.width, canvas.height, segW, segH);
+ var tex = new THREE.Texture(canvas);
+ tex.needsUpdate = true;
+ var planeMat = new THREE.MeshBasicMaterial({
+ map: tex, color: 0xffffff, transparent: true
+ });
+ var mesh = new THREE.Mesh(plane, planeMat);
+ mesh.doubleSided = true;
+ return mesh;
+ }
+
+ THREE.LeftAlign = 1;
+ THREE.CenterAlign = 0;
+ THREE.RightAlign = -1;
+ THREE.TopAlign = -1;
+ THREE.BottomAlign = 1;
+
+ function alignPlane(plane, horizontalAlign, verticalAlign) {
+ var obj = new THREE.Object3D();
+ var u = plane.geometry.vertices[0].position;
+ var v = plane.geometry.vertices[plane.geometry.vertices.length-1].position;
+ //var width = Math.abs(u.x - v.x);
+ //var height = Math.abs(u.y - v.y);
+ var width = Math.abs(u - v);
+ var height = Math.abs(u - v);
+ plane.position.x = (width/2) * horizontalAlign;
+ plane.position.y = (height/2) * verticalAlign;
+ obj.add(plane);
+ return obj;
+ }
+
+ var renderer = new THREE.WebGLRenderer({antialias: true});
+ var w = document.body.clientWidth;
+ var h = document.body.clientHeight;
+ renderer.setSize(w, h);
+ document.body.appendChild(renderer.domElement);
+
+ renderer.setClearColor(0xEEEEEE, 1.0);
+ renderer.shadowMapEnabled = true;
+ renderer.shadowMapWidth = 1024;
+ renderer.shadowMapHeight = 1024;
+ renderer.shadowCameraFov = 35;
+
+ var camera = new THREE.PerspectiveCamera( 45, w/h, 1, 10000 );
+ camera.position.z = 200;
+ camera.position.x = -100;
+ camera.position.y = 150;
+
+ var scene = new THREE.Scene();
+
+ var light = new THREE.SpotLight();
+ light.castShadow = true;
+ light.position.set( -170, 300, 100 );
+ scene.add(light);
+
+ var ambientLight = new THREE.PointLight(0x442255);
+ ambientLight.position.set(20, 150, -120);
+ scene.add(ambientLight);
+
+ var plane = new THREE.Mesh(
+ new THREE.CubeGeometry(180, 80, 180),
+ new THREE.MeshLambertMaterial({color: 0xFFFFFF}));
+ plane.position.y = -40;
+ plane.receiveShadow = true;
+ plane.doubleSided = true;
+ scene.add(plane);
+
+ var grid = [];
+ for (var y=0; y<9; y++) {
+ grid[y] = [];
+ for (var x=0; x<9; x++) {
+ grid[y][x] = 10+Math.random()*(15+x*y);
+ }
+ }
+
+ var barGraph = new THREE.Object3D();
+ scene.add(barGraph);
+
+ var max = grid.reduce(function(s,i){
+ return Math.max(s, Math.max.apply(null, i));
+ }, grid[0][0]);
+ for (var j=0; j<grid.length; j++) {
+ var array = grid[j];
+ var title = alignPlane(createText2D(j), THREE.CenterAlign, THREE.CenterAlign);
+ title.scale.set(0.25, 0.25, 0.25);
+ title.position.x = (-1-(array.length-1)/2) * 16;
+ title.position.z = -(j-(grid.length-1)/2) * 16;
+ title.position.y = 1;
+ title.rotation.x = -Math.PI/2;
+ barGraph.add(title);
+ }
+ for (var j=0; j<grid[0].length; j++) {
+ var array = grid[0];
+ var c = String.fromCharCode(j+65);
+ var title = alignPlane(createText2D(c), THREE.CenterAlign, THREE.CenterAlign);
+ title.scale.set(0.25, 0.25, 0.25);
+ title.position.x = (j-(array.length-1)/2) * 16;
+ title.position.z = -(-1-(grid.length-1)/2) * 16;
+ title.position.y = 1;
+ title.rotation.x = -Math.PI/2;
+ barGraph.add(title);
+ }
+ for (var j=0; j<grid.length; j++) {
+ var array = grid[j];
+ for (var i=0; i<array.length; i++) {
+ var mat = new THREE.MeshLambertMaterial({color: 0xFFAA55});
+ var barHeight = array[i]/max * 80;
+ //mat.color.setHSV(0.2 + 0.8*array[i]/max, 0.8, 1);
+ mat.color.setHSL(0.2 + 0.8*array[i]/max, 0.8, 1);
+ var geo = new THREE.CubeGeometry(8, barHeight, 8);
+ var mesh = new THREE.Mesh(geo, mat);
+ mesh.position.x = (i-(array.length-1)/2) * 16;
+ mesh.position.y = barHeight/2;
+ mesh.position.z = -(j-(grid.length-1)/2) * 16;
+ mesh.castShadow = mesh.receiveShadow = true;
+ barGraph.add(mesh);
+ }
+ }
+
+ renderer.render(scene, camera);
+ var paused = false;
+ var last = new Date().getTime();
+ var down = false;
+ var sx = 0, sy = 0;
+ var rot = Math.PI/3;
+ camera.position.x = Math.cos(rot)*170;
+ camera.position.z = Math.sin(rot)*170;
+ window.onmousedown = function (ev){
+ down = true; sx = ev.clientX; sy = ev.clientY;
+ };
+ window.onmouseup = function(){ down = false; };
+ window.onmousemove = function(ev) {
+ if (down) {
+ var dx = ev.clientX - sx;
+ var dy = ev.clientY - sy;
+ rot += dx*0.01;
+ camera.position.x = Math.cos(rot)*170;
+ camera.position.z = Math.sin(rot)*170;
+ camera.position.y = Math.max(5, camera.position.y+dy);
+ sx += dx;
+ sy += dy;
+ }
+ }
+ function animate(t) {
+ if (!paused) {
+ last = t;
+ renderer.clear();
+ camera.lookAt(scene.position);
+ renderer.render(scene, camera);
+ }
+ window.requestAnimationFrame(animate, renderer.domElement);
+ };
+ animate(new Date().getTime());
+ onmessage = function(ev) {
+ paused = (ev.data == 'pause');
+ };
+
+ */
+
+
+</script>
+
+</body>
+</html>

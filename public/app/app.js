@@ -1,0 +1,12 @@
+angular.module('app',
+    ['ngRoute',
+        'ui.bootstrap',
+        'Routes',
+        'GlobalService',
+        'HomeCtrl',
+        'CatFindCtrl',
+        'CatService',
+        'DogFindCtrl',
+        'DogService',
+        'ThumbFindCtrl']
+);

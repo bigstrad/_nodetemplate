@@ -1,0 +1,31 @@
+<div data-ng-show="msg.text.length>0" class="{{msg.css}}" role="alert">{{ msg.text }}</div>
+
+<div class="portfolio-modal" tabindex="-1" role="dialog">
+    <div class="modal-content">
+        <div class="close-modal" ng-click="cancel()">
+            <div class="lr">
+                <div class="rl">
+                </div>
+            </div>
+        </div>
+        <div class="modal-header">
+            <h4 class="modal-title">Modal title</h4>
+        </div>
+
+        <div class="modal-body">
+            <img src="/assets/img/portfolio/dreams.png" class="img-thumbnail" alt="Responsive image">
+            <img src="/assets/img/portfolio/dreams.png" class="img-thumbnail" alt="Responsive image">
+            <img src="/assets/img/portfolio/dreams.png" class="img-thumbnail" alt="Responsive image">
+            <img src="/assets/img/portfolio/dreams.png" class="img-thumbnail" alt="Responsive image">
+            <img src="/assets/img/portfolio/dreams.png" class="img-thumbnail" alt="Responsive image">
+            <img src="/assets/img/portfolio/dreams.png" class="img-thumbnail" alt="Responsive image">
+            <img src="/assets/img/portfolio/dreams.png" class="img-thumbnail" alt="Responsive image">
+            <img src="/assets/img/portfolio/dreams.png" class="img-thumbnail" alt="Responsive image">
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()"><i class="fa fa-times"></i>Close</button>
+            <button type="button" class="btn btn-primary" ng-click="ok()">Save changes</button>
+        </div>
+    </div>
+</div>

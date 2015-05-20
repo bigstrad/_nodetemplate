@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>FFM</title>
+        <meta name="description" content="FFM">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- css -->
+        <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">-->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+        
+        <!--<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css" rel="stylesheet">-->
+        <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" rel="stylesheet">
+        
+		<link href="/js/vendor/select2-3.4.3/select2.css" rel="stylesheet">
+        
+        <link href="/css/local.css" rel="stylesheet">
+        
+		
+    </head>
+    <body>
+    
+    	<!-- Navbar
+		================================================== -->
+		<div class="navbar navbar-default navbar-static-top" ng-controller="NavCtrl">
+		  <div class="container">
+			<div class="navbar-header">
+			  <a href="../" class="navbar-brand">FFM</a>
+			  <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			</div>
+			<div class="navbar-collapse collapse" id="navbar-main">
+			  <ul class="nav navbar-nav">
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Menu <span class="caret"></span></a>
+				  <ul class="dropdown-menu" aria-labelledby="themes">
+					<li><a tabindex="-1" href="/">Home</a></li>
+					<li class="divider"></li>
+					<li><a tabindex="-1" href="/view/orders">View Receipt Orders</a></li>
+					<li><a tabindex="-1" href="/view/ordersave">Save New Receipt Order</a></li>
+					<!--<li><a tabindex="-1" href="/orders/1">Order 1</a></li>
+					<li><a tabindex="-1" href="/orders/2">Order 2</a></li>
+					<li><a tabindex="-1" href="/orders/3">Order 3</a></li>-->
+					<li><a tabindex="-1" href="/view/login">Login</a></li>
+				  </ul>
+				</li>
+				<!--<li>
+				  <a href="../help/">Help</a>
+				</li>-->
+				<li>
+				  <a href="http://bigstrad.com" target="_blank">Blog</a>
+				</li>
+				<!--<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Download <span class="caret"></span></a>
+				  <ul class="dropdown-menu" aria-labelledby="download">
+					<li><a tabindex="-1" href="./bootstrap.min.css">bootstrap.min.css</a></li>
+					<li><a tabindex="-1" href="./bootstrap.css">bootstrap.css</a></li>
+					<li class="divider"></li>
+					<li><a tabindex="-1" href="./variables.less">variables.less</a></li>
+					<li><a tabindex="-1" href="./bootswatch.less">bootswatch.less</a></li>
+				  </ul>
+				</li>-->
+			  </ul>
+	
+			  <ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Profile <span class="caret"></span></a>				
+					<ul class="dropdown-menu">
+						<li>
+							<a href="/view/login">Login</a>
+						</li>
+						<li class="divider"></li>
+						<!--<li class="dropdown-header">Edit</li>-->
+						<li>
+						<a href="/view/profile">Profile</a>
+						</li>
+					</ul>
+				</li>
+			  </ul>
+	
+			</div>
+		  </div>
+		</div>
+		<!-- Toolbar -->
+		
+	
+		<!-- Container
+		================================================== -->
+		<div class="container" ng-controller="GlobalCtrl">
+		  <div ng-cloak class="page-header" id="banner">
+		  
+		  	<div ng-cloak app-messages></div>
+		  
+		  	<div ng-cloak ng-show="global_service.message_success.length>0" class="alert alert-success alert-dismissable">
+			  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			  <strong>Success</strong> {{global_service.message_success}}
+			</div>
+		  
+		  	<div ng-cloak ng-show="global_service.message_error.length>0" class="alert alert-danger alert-dismissable">
+			  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			  <strong>Error</strong> {{global_service.message_error}}
+			</div>
+
+		  	<div ng-cloak ng-view></div>
+			
+		  </div>
+
+	
+	
+		  <footer>
+			<div class="row">
+			  <div class="col-lg-12">
+				<ul class="list-inline">
+				  <li><a href="http://news.bootswatch.com" onclick="pageTracker._link(this.href); return false;">Blog</a></li>
+				  <li><a href="https://twitter.com/thomashpark">Twitter</a></li>
+				  <li><a href="https://twitter.com/thomashpark">Facebook</a></li>
+				  <li><a href="../help/#api">API</a></li>
+				  <li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=F22JEM3Q78JC2">Donate</a></li>
+				</ul>
+				<p>&copy; 2015 Stradford, LLC</p>
+			  </div>
+			</div>
+		  </footer>
+		
+	
+		</div>
+		 
+		<!-- scripts -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		
+		<script src="/js/vendor/select2-3.4.3/select2.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+        <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>-->
+        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>-->
+		<script src="/js/vendor/ui-select2-master/src/select2.js"></script>
+		<script src="/js/vendor/uuid/uuid.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<script src="/js/angular_app.js"></script>
+		<script src="/js/angular_services.js"></script>
+		<script src="/js/angular_controllers.js"></script>
+		
+	</body>
+</html>

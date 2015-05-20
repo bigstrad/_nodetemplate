@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Editor</title>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <style type="text/css" media="screen">
+        body {
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .editor_div {
+            width: 50%;
+            height: 70%;
+            float:left;
+        }
+        .editor {
+            display:none;
+            width: 95%;
+            height: 350px;;
+        }
+        .ace_scroller {
+            height: 500px;
+        }
+        #editor {
+            margin: 0;
+            position: relative;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="editor_div">
+    <h2>One</h2>
+    <pre id="editor" class="editor"></pre>
+    <textarea id="textarea_data" style="display:none;">
+&lt;html&gt;&lt;head&gt;
+&lt;script&gt;
+function foo(items) {
+var i;
+for (i = 0; i &lt; items.length; i++) {
+console.log("Ace Rocks " + items[i]);
+}
+&lt;/script&gt;
+&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Hi from One!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+    </textarea>
+</div>
+<div class="editor_div">
+    <h2>Two</h2>
+    <pre id="editor2" class="editor"></pre>
+    <textarea id="textarea_data2" style="display:none;">
+&lt;html&gt;&lt;head&gt;
+&lt;script&gt;
+function foo(items) {
+var i;
+for (i = 0; i &lt; items.length; i++) {
+console.log("Ace Rocks " + items[i]);
+}
+&lt;/script&gt;
+&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Hi from Two!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+    </textarea>
+</div>
+<div style="clear: both;"></div>
+<div>
+    <button class="btn" onclick="readValue()">Retrieve from Db</button>
+    <button class="btn btn-primary" onclick="saveValue()">Save to Db</button>
+    <button class="btn" onclick="preview()">Preview</button>
+    <button class="btn" onclick="clearValue()">Clear Editor</button>
+</div>
+<div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="//cdn.jsdelivr.net/ace/1.1.01/min/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = null;
+    var editor2 = null;
+    $(document).ready(function () {
+        //
+        // Editor
+        //
+        editor = ace.edit("editor");
+        editor.getSession().setMode("ace/mode/html");
+        editor.getSession().setUseWrapMode(true);
+        editor.setHighlightActiveLine(true);
+        editor.setReadOnly(false);  // false to make it editable
+        $("#editor").show();
+
+        //
+        // Editor2
+        //
+        editor2 = ace.edit("editor2");
+        editor2.getSession().setMode("ace/mode/html");
+        editor2.getSession().setUseWrapMode(true);
+        editor2.setHighlightActiveLine(true);
+        editor2.setReadOnly(false);  // false to make it editable
+        $("#editor2").show();
+    });
+    function clearValue() {
+        var value = '';
+        editor.setValue(value);
+        editor2.setValue(value);
+    }
+    function readValue() {
+        var value = '';
+
+        value = $('#textarea_data').html(); // temporarily behaving as db store
+        value = htmlspecialchars_decode(value);
+        editor.setValue(value); // or session.setValue
+
+        value = $('#textarea_data2').html(); // temporarily behaving as db store
+        value = htmlspecialchars_decode(value);
+        editor2.setValue(value); // or session.setValue
+    }
+    function saveValue() {
+        var value = '';
+
+        value = editor.getValue();
+        value = htmlspecialchars(value); //unEscapeValue(value); // or session.getValue
+        $('#textarea_data').html(value); // temporarily behaving as db store
+
+        value = editor2.getValue();
+        value = htmlspecialchars(value); //unEscapeValue(value); // or session.getValue
+        $('#textarea_data2').html(value); // temporarily behaving as db store
+    }
+    function htmlspecialchars(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+    }
+    function htmlspecialchars_decode(str) {
+        return str.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, '\'');
+    }
+    function preview() {
+        var value = '';
+        value = $('#textarea_data').html(); // temporarily behaving as db store
+        value = value + '<hr/>';
+        value = value + $('#textarea_data2').html(); // temporarily behaving as db store
+        value = htmlspecialchars_decode(value);
+        top.consoleRef = window.open('', 'myconsole',
+                'width=768,height=1024'
+                        + ',menubar=0'
+                        + ',toolbar=1'
+                        + ',status=0'
+                        + ',scrollbars=1'
+                        + ',resizable=1')
+        docRef = top.consoleRef.document.open("text/html", "replace"); // to prevent new history entries
+        top.consoleRef.document.writeln(value)
+        top.consoleRef.document.close()
+    }
+</script>
+</body>
+</html>

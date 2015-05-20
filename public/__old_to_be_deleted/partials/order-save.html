@@ -1,0 +1,51 @@
+<ol class="breadcrumb">
+	<li><a href="/">Home</a></li>
+	<li><a href="/view/ordersave">Save New Receipt Order</a></li>
+</ol>
+<div class="row">
+  <div class="col-lg-6">
+	<div class="well">
+	<form name="form" novalidate class="form-horizontal">
+		<fieldset>
+		  <legend>Save Order</legend>
+		  <div class="form-group">
+			<div class="col-lg-12X">
+				<label class="control-label">Partner</label>
+				<select ui-select2 ng-model="tmp_order.partner" 
+					ng-options="c.name for c in partner_list | orderBy:'name'" 
+					required class="form-control input-lg" 
+					data-placeholder="Pick a partner"
+					autofocus="">
+				</select>
+			</div>
+		  </div>
+		  <div class="form-group">
+			<div class="col-lg-12X">
+				<label class="control-label">Receipt Order Number</label>
+			  <input ng-model="tmp_order.receipt_id"
+			  	required type="text" 
+			  	class="form-control input-lg" 
+			  	data-placeholder="Enter order id from receipt">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<div class="col-lg-12X">
+				<label class="control-label">Name</label>
+			  <input ng-model="tmp_order.name"
+			  	required type="text" 
+			  	class="form-control input-lg" 
+			  	data-placeholder="Enter an easy to remember name">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<div class="col-lg-12X">
+			  <button ng-click="save()"
+			  	class="btn btn-lg btn-primary btn-block btn-default">Save</button> 
+			</div>
+		  </div>
+		</fieldset>
+	</form>
+	</div>
+   </div>
+</div>	
+		

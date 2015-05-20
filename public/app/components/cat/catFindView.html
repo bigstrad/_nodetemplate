@@ -1,0 +1,42 @@
+<div data-ng-show="msg.text.length>0" class="{{msg.css}}" role="alert">{{ msg.text }}</div>
+
+<div class="container-fluid">
+    <p>Cat {{ tagline }}</p>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Body</th>
+            <th>Comments</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="data in dataList | orderBy: 'date': true"
+            ng-class="{'danger':data.protected==true, 'success':data.protected!=true}">
+            <td>
+                <button type="button" class="btn btn-default" ng-disabled="data.protected==true"
+                        ng-click="remove(data._id)">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Remove
+                </button>
+            </td>
+            <td>
+                {{ data.name }}
+            </td>
+            <td>
+                {{ data.date }}
+            </td>
+            <td>
+                {{ data.body }}
+            </td>
+            <td>
+                {{ data.comments.body }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+

@@ -1,0 +1,36 @@
+{
+    "_id": "5252438a8e18f64592000002",
+    "country_code": "1",
+    "phone": 9724756374,
+    "email": "nick@nick.com",
+    "name": "nickstradford",
+    "password": "password",
+    "past_orders": [
+        {
+            "uuid": "618304d0-38fb-11e3-bfab-b51a379a518b",
+            "receipt_id": "123",
+            "name": "Breakfast Number 1",
+            "status": "active",
+            "expiration": "",
+            "partner": {
+                "_id": "5252413921d20ec110b869d5",
+                "name": "McDonald's"
+            },
+            "data": "01010101011010101010101"
+        }
+    ],
+    "new_orders": [
+        {
+            "uuid": "836104d0-38fb-11e3-bfab-b51a379a515c",
+            "receipt_id": "123",
+            "name": "Breakfast Number 1",
+            "status": "pending",
+            "expiration": "",
+            "partner": {
+                "_id": "5252413921d20ec110b869d5",
+                "name": "McDonald's"
+            },
+            "data": "01010101011010101010101"
+        }
+    ]
+}

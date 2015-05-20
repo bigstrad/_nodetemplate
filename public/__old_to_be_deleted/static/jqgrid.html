@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script>
+        $("#grid").jqGrid({
+            //scroll: 1,
+            autowidth: false,
+            shrinkToFit: true,
+            width: "1000",
+            height: 'auto',
+            //datatype: function (pdata) {
+            //    getJQGridData(pdata);
+            //},
+            data: mydata,
+            datatype: "local",
+            //url: 'Test3.aspx',
+            //type: "POST",
+            loadonce: true,
+            datatype: "json",
+            //colNames: ['Action', 'Genre', 'Rank TW', 'Rank \nLW', 'Rank +/-', 'Artist (Title) (Label)', 'Spin TW', 'Spin LW', 'Spin +/-', 'DJ TW', 'DJ LW', 'DJ +/-'],
+            colModel: [
+                { name: 'SongID', index: 'SongID', align: 'left', width: '80', sortable: false, formatter: drillDownFormatter },
+                { name: 'Genre', index: 'Genre', align: 'left', width: '100', hidden: true },
+                { name: 'Rank_TW', index: 'Rank_TW', align: 'right', width: '70' },
+                { name: 'Rank_LW', index: 'Rank_LW', align: 'right', width: '70' },
+                { name: 'Rank_Move', index: 'Rank_Move', align: 'right', width: '70' },
+                { name: 'Name', index: 'Name', align: 'left', width: '250' },
+                { name: 'Spin_TW', index: 'Spin_TW', align: 'right', width: '70' },
+                { name: 'Spin_LW', index: 'Spin_LW', align: 'right', width: '70' },
+                { name: 'Spin_Move', index: 'Spin_Move', align: 'right', width: '60' },
+                { name: 'DJ_TW', index: 'DJ_TW', align: 'right', width: '60' },
+                { name: 'DJ_LW', index: 'DJ_LW', align: 'right', width: '60' },
+                { name: 'DJ_Move', index: 'DJ_Move', align: 'right', width: '60'}],
+            pager: jQuery('#footer'),
+            rowNum: -1, // -1 = all rows
+            //rowList: [10, 20, 50, 100],
+            sortname: 'Rank_TW',
+            sortorder: "desc",
+            sortable: true,
+            caption: '7-day Chart (Top 40)',
+            grouping: true,
+            groupingView: {
+                groupField: ['Genre'],
+                groupDataSorted: true
+            }
+
+        });
+
+        // add/edit/del buttons
+        jQuery("#grid").jqGrid('navGrid', '#footer', { refresh: true, search: true, add: false, edit: false, del: false });
+
+        // resize
+        jQuery("#grid").jqGrid('gridResize'); //, { minWidth: 350, maxWidth: 800, minHeight: 80, maxHeight: 350 });
+
+        // column chooser
+        jQuery("#grid").jqGrid('navButtonAdd', '#footer', {
+            caption: "Columns",
+            title: "Reorder Columns",
+            onClickButton: function () {
+                jQuery("#grid").jqGrid('columnChooser');
+            }
+        });
+
+        // page navigation
+        jQuery("#footer_center").css("display", "none");
+
+        // add custom button to export the data to excel
+        /*jQuery("#grid").jqGrid('navButtonAdd', '#footer', {
+         caption: "Save PDF",
+         onClickButton: function () {
+         jQuery("#grid").jqGrid('excelExport', { tag: "pdf" });
+         }
+         });*/
+
+
+
+        /*
+
+         // Export/Import - http://www.trirand.com/jqgridwiki/doku.php?id=wiki:import_methods&s[]=json&s[]=import
+         $("#gridExport").click(function(){
+         gridExp = jQuery("#grid")
+         .jqGridExport(
+         {
+         exptype: 'jsonstring'
+         }
+         );
+
+         jQuery("#grid")
+         .GridUnload();
+         });
+         $("#gridImport").click(function(){
+         jQuery("#grid")
+         .jqGridImport(
+         {
+         imptype: 'jsonstring',
+         impstring: gridExp
+         }
+         );
+         });
+
+         */
+
+//        { name: 'SongID', index: 'SongID', align: 'left', width: '80', sortable: false, formatter: drillDownFormatter },
+//        { name: 'Genre', index: 'Genre', align: 'left', width: '100', hidden: true },
+//        { name: 'Rank_TW', index: 'Rank_TW', align: 'right', width: '70' },
+//        { name: 'Rank_LW', index: 'Rank_LW', align: 'right', width: '70' },
+//        { name: 'Rank_Move', index: 'Rank_Move', align: 'right', width: '70' },
+//        { name: 'Name', index: 'Name', align: 'left', width: '250' },
+//        { name: 'Spin_TW', index: 'Spin_TW', align: 'right', width: '70' },
+//        { name: 'Spin_LW', index: 'Spin_LW', align: 'right', width: '70' },
+//        { name: 'Spin_Move', index: 'Spin_Move', align: 'right', width: '60' },
+//        { name: 'DJ_TW', index: 'DJ_TW', align: 'right', width: '60' },
+//        { name: 'DJ_LW', index: 'DJ_LW', align: 'right', width: '60' },
+//        { name: 'DJ_Move', index: 'DJ_Move', align: 'right', width: '60'}],
+        
+        var mydata = [
+            {SongID:"1",invdate:"2010-05-24",Genre:"test",Name:"note",tax:"10.00",total:"2111.00"} ,
+            {SongID:"2",invdate:"2010-05-25",Genre:"test2",Name:"note2",tax:"20.00",total:"320.00"},
+            {SongID:"3",invdate:"2007-09-01",Genre:"test3",Name:"note3",tax:"30.00",total:"430.00"},
+            {SongID:"4",invdate:"2007-10-04",Genre:"test",Name:"note",tax:"10.00",total:"210.00"},
+            {SongID:"5",invdate:"2007-10-05",Genre:"test2",Name:"note2",tax:"20.00",total:"320.00"},
+            {SongID:"6",invdate:"2007-09-06",Genre:"test3",Name:"note3",tax:"30.00",total:"430.00"},
+            {SongID:"7",invdate:"2007-10-04",Genre:"test",Name:"note",tax:"10.00",total:"210.00"},
+            {SongID:"8",invdate:"2007-10-03",Genre:"test2",Name:"note2",amount:"300.00",tax:"21.00",total:"320.00"},
+            {SongID:"9",invdate:"2007-09-01",Genre:"test3",Name:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+            {SongID:"11",invdate:"2007-10-01",Genre:"test",Name:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+            {SongID:"12",invdate:"2007-10-02",Genre:"test2",Name:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+            {SongID:"13",invdate:"2007-09-01",Genre:"test3",Name:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+            {SongID:"14",invdate:"2007-10-04",Genre:"test",Name:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+            {SongID:"15",invdate:"2007-10-05",Genre:"test2",Name:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+            {SongID:"16",invdate:"2007-09-06",Genre:"test3",Name:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+            {SongID:"17",invdate:"2007-10-04",Genre:"test",Name:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+            {SongID:"18",invdate:"2007-10-03",Genre:"test2",Name:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+            {SongID:"19",invdate:"2007-09-01",Genre:"test3",Name:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+            {SongID:"21",invdate:"2007-10-01",Genre:"test",Name:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+            {SongID:"22",invdate:"2007-10-02",Genre:"test2",Name:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+            {SongID:"23",invdate:"2007-09-01",Genre:"test3",Name:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+            {SongID:"24",invdate:"2007-10-04",Genre:"test",Name:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+            {SongID:"25",invdate:"2007-10-05",Genre:"test2",Name:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+            {SongID:"26",invdate:"2007-09-06",Genre:"test3",Name:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+            {SongID:"27",invdate:"2007-10-04",Genre:"test",Name:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+            {SongID:"28",invdate:"2007-10-03",Genre:"test2",Name:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+            {SongID:"29",invdate:"2007-09-01",Genre:"test3",Name:"note3",amount:"400.00",tax:"30.00",total:"430.00"}
+        ];
+
+    </script>
+</head>
+<body>
+<table id="grid"></table>
+<div id="pager" ></div>
+</body>
+</html>

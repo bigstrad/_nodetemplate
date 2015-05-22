@@ -1,8 +1,19 @@
 angular.module('CatFindCtrl', [])
     .controller('CatFindController',
-    function ($scope, GlobalService, CatService) {
+    function ($scope, GlobalService, CatService, $modalInstance, p1) {
         $scope.msg = GlobalService.getMessageObject();
         $scope.dataList = [];
+        $scope.p1 = p1;
+
+        // modal logic
+        $scope.ok = function () {
+            //$modalInstance.close($scope.p1);
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
 
         // remove
         $scope.remove = function (id) {

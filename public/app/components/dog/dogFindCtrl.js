@@ -1,8 +1,19 @@
 angular.module('DogFindCtrl', [])
     .controller('DogFindController',
-    function ($scope, GlobalService, DogService) {
+    function ($scope, GlobalService, DogService, $modalInstance, p1) {
         $scope.msg = GlobalService.getMessageObject();
         $scope.dataList = [];
+        $scope.p1 = p1;
+
+        // modal logic
+        $scope.ok = function () {
+            //$modalInstance.close($scope.p1);
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
 
         // remove
         $scope.remove = function (id) {

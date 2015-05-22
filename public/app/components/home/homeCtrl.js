@@ -44,7 +44,6 @@ angular.module('HomeCtrl', [])
                 size: 'lg',
                 resolve: {
                     p1 : function () {
-                        //$log.info('Modal opened at: ' + new Date());
                         return p1;
                     }
                 }
@@ -57,16 +56,15 @@ angular.module('HomeCtrl', [])
             });
         };
 
-        $scope.catFind = function (in_1) {
+        $scope.catFind = function (p1) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/components/cat/catFindView.html',
                 controller: 'CatFindController',
                 size: 'lg',
-                in_1: in_1,
+                //in_1: in_1,
                 resolve: {
-                    items: function () {
-                        //$log.info('Modal opened at: ' + new Date());
-                        return $scope.items;
+                    p1 : function () {
+                        return p1;
                     }
                 }
             });
@@ -78,16 +76,15 @@ angular.module('HomeCtrl', [])
             });
         };
 
-        $scope.dogFind = function (in_1) {
+        $scope.dogFind = function (p1) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/components/dog/dogFindView.html',
                 controller: 'DogFindController',
                 size: 'lg',
-                in_1: in_1,
+                //in_1: in_1,
                 resolve: {
-                    items: function () {
-                        //$log.info('Modal opened at: ' + new Date());
-                        return $scope.items;
+                    p1 : function () {
+                        return p1;
                     }
                 }
             });

@@ -335,47 +335,47 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Your Name *" name="name"
-                                       ng-model="user.name" ng-minlength="6" ng-maxlength="255" ng-required="true" required>
+                                       data-ng-model="user.name" data-ng-minlength="6" data-ng-maxlength="255" data-ng-required="true" required>
                                 <span class="help-block text-danger"
-                                      ng-show="contactForm.name.$dirty && contactForm.name.$invalid">
-                                    <span ng-show="contactForm.name.$error.required">Please enter your name.</span>
-                                    <span ng-show="contactForm.name.$error.minlength">Name is too short.</span>
-                                    <span ng-show="contactForm.name.$error.maxlength">Name is too long.</span>
+                                      data-ng-show="contactForm.name.$dirty && contactForm.name.$invalid">
+                                    <span data-ng-show="contactForm.name.$error.required">Please enter your name.</span>
+                                    <span data-ng-show="contactForm.name.$error.minlength">Name is too short.</span>
+                                    <span data-ng-show="contactForm.name.$error.maxlength">Name is too long.</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input type="email" class="form-control" placeholder="Your Email *" name="email"
-                                       ng-model="user.email" ng-required="true" required>
+                                       data-ng-model="user.email" data-ng-required="true" required>
                                 <span class="help-block text-danger"
-                                      ng-show="contactForm.email.$dirty && contactForm.email.$invalid">
-                                      <span ng-show="contactForm.email.$error.required">Please enter your email address.</span>
-                                      <span ng-show="contactForm.email.$error.email">The email address is invalid.</span>
+                                      data-ng-show="contactForm.email.$dirty && contactForm.email.$invalid">
+                                      <span data-ng-show="contactForm.email.$error.required">Please enter your email address.</span>
+                                      <span data-ng-show="contactForm.email.$error.email">The email address is invalid.</span>
                                       </span>
                             </div>
                             <div class="form-group">
                                 <input type="tel" class="form-control" placeholder="Your Phone *" name="phone"
-                                       ng-model="user.phone" ng-required="true" required>
+                                       data-ng-model="user.phone" data-ng-required="true" required>
                                 <span class="help-block text-danger"
-                                      ng-show="contactForm.phone.$dirty && contactForm.phone.$invalid">
-                                    <span ng-show="contactForm.phone.$error.required">Please enter your phone number.</span>
+                                      data-ng-show="contactForm.phone.$dirty && contactForm.phone.$invalid">
+                                    <span data-ng-show="contactForm.phone.$error.required">Please enter your phone number.</span>
                                 </span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <textarea class="form-control" placeholder="Your Message *" name="message"
-                                          ng-model="user.message" ng-maxlength="1000" ng-required="true" required></textarea>
+                                          data-ng-model="user.message" data-ng-maxlength="1000" data-ng-required="true" required></textarea>
                                     <span class="help-block text-danger"
-                                          ng-show="contactForm.message.$dirty && contactForm.message.$invalid">
-                                        <span ng-show="contactForm.message.$error.required">Please enter your message.</span>
-                                        <span ng-show="contactForm.message.$error.maxlength">Message is too long.</span>
+                                          data-ng-show="contactForm.message.$dirty && contactForm.message.$invalid">
+                                        <span data-ng-show="contactForm.message.$error.required">Please enter your message.</span>
+                                        <span data-ng-show="contactForm.message.$error.maxlength">Message is too long.</span>
                                     </span>
                             </div>
                         </div>
                         <div class="clearfix"></div>
                         <div class="col-lg-12 text-center">
                             <div id="success"></div>
-                            <button ng-click="submitContact(contactForm)" type="submit" class="btn btn-xl" ng-disabled="contactForm.$invalid">Send Message</button>
+                            <button data-ng-click="submitContact(contactForm)" type="submit" class="btn btn-xl" data-ng-disabled="contactForm.$invalid">Send Message</button>
 
                         </div>
                     </div>

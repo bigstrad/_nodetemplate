@@ -4,6 +4,7 @@ angular.module('ThumbFindCtrl', [])
         $scope.msg = GlobalService.getMessageObject();
         $scope.p1 = p1;
 
+        // modal logic
         $scope.ok = function () {
             $modalInstance.close($scope.p1);
         };
@@ -14,8 +15,6 @@ angular.module('ThumbFindCtrl', [])
 
         // init
         $scope.init = function () {
-            //$scope.msg = GlobalService
-            //    .getMessageObject($scope.p1, "");
         };
 
         // call init
